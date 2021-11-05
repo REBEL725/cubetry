@@ -105,6 +105,11 @@ class ElasticsearchHandler
                                 'filter' => ['lowercase']
                             ],
                             'autocomplete_search' => ['tokenizer' => 'lowercase'],
+                            'sku' => [
+                                'type' => 'custom',
+                                'tokenizer' => 'keyword',
+                                'filter' => ['lowercase','keyword_repeat','default_stemmer','unique_stem']
+                            ],
                             'default' => [
                                 'type' => 'custom',
                                 'tokenizer' => 'default_tokenizer',
@@ -149,8 +154,7 @@ class ElasticsearchHandler
                         ],
                         'product_codes.sku' => [
                             'type' => 'text',
-                            'analyzer' => 'autocomplete',
-                            'search_analyzer' => 'autocomplete_search'
+                            'analyzer' => 'sku'
                         ]
                     ]
                 ]
