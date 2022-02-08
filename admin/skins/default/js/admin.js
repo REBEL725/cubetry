@@ -144,6 +144,34 @@ function ajaxSuggest(t, e, i) {
     }, "json")
 }
 
+function ajaxElasticSearch(e) {
+    var i = $("#val_admin_file").text();
+    $.getJSON("./" + i, {
+        _g: "xml",
+        page: e,
+        function: "rebuildElasticsearch"
+    }, function(i) {
+        if (typeof i.error !== 'undefined' && i.error=='true') {
+            window.location.href = '?_g=maintenance#elasticsearch';
+            return false;
+        }
+        if(i.es_count !== false && i.es_size !== false) {
+            $("#es_count").html(i.es_count);
+            $("#es_size").html(i.es_size);
+        }
+        $("div#progress_bar").css({
+            width: i.percent + "%"
+        });
+        $("div#progress_bar_percent").text(Math.round(i.percent) + "%");
+        if(100 == i.percent || "true" == i.complete) {
+            window.onbeforeunload = null;
+            setTimeout(function(){}, 2000);
+        } else {
+            ajaxElasticSearch(e + 1);
+        }
+    })
+}
+
 function ajaxNewsletter(t, e) {
     var i = $("#val_admin_file").text();
     $.getJSON("./" + i, {
@@ -261,14 +289,22 @@ $(document).ready(function() {
         $(this).after(d)
     });
 
+    $("#content_body").on("click", "#rebuild_elastic", function() {
+        $(this).hide();
+        $('#progress_wrapper').css("display", "block");
+        $("#es_count").html('-');
+        $("#es_size").html('-');
+        ajaxElasticSearch(1);
+    });
+
     $('#submit_multi').on("click",function() {
         if($('select[name="multi-action"]').val() == 'delete') {
             if(!confirm($(this).attr("data-confirm"))) {
                 return false;
             }          
         }
-    });
-    
+    }); 
+
     $("#content_body").on("click", "img.cbs", function() {
         var e = $(this).attr("rel");
         switch ($(e).val()) {
@@ -284,7 +320,7 @@ $(document).ready(function() {
         var new_src = $(this).attr('src').replace(value_old+'_checkbox.png',value_new+'_checkbox.png');
         $(this).attr({src: new_src});
         $(e).val(value_new)
-    })
+    });
 
     $('.chzn-select').chosen({width:"50%",search_contains:true});
     var t = !1;

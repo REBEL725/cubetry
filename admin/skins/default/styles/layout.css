@@ -1,5 +1,5 @@
 #logo {
-    margin: 0 0 0 3px
+    margin: 3px 0 0 3px
 }
 a.button, div.button, span.button, button.button,
 input[type=button],
@@ -999,7 +999,7 @@ a.handle {
     width: 0;
     height: 10px;
 }
-#newsletter_send {
+#newsletter_send, #elasticsearch #progress_bar_percent {
     text-align: center
 }
 table.fixed {
@@ -1458,4 +1458,7 @@ ul.fmsearch_images img {
 }
 .text-right {
     text-align: right!important
+}
+.text-center {
+    text-align: center!important
 }

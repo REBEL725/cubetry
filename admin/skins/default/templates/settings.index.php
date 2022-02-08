@@ -149,9 +149,9 @@
             {foreach from=$OPT_RECAPTCHA item=option}<option value="{$option.value}"{$option.selected}>{$option.title}</option>{/foreach}
             </select>
          </span></div>
-         <div><label for="recaptcha_public_key">{$LANG.settings.recaptcha_public_key}</label><span><input name="config[recaptcha_public_key]" id="recaptcha_public_key" class="textbox" value="{$CONFIG.recaptcha_public_key}"></span></div>
-         <div><label for="recaptcha_secret_key">{$LANG.settings.recaptcha_secret_key}</label><span><input name="config[recaptcha_secret_key]" id="recaptcha_secret_key" class="textbox" value="{$CONFIG.recaptcha_secret_key}"></span></div>
-         <div class="clear important"><strong>{$LANG.settings.new_recaptcha_note}</strong>
+         <div><label for="recaptcha_public_key">{$LANG.settings.recaptcha_public_key} {$LANG.common.optional}</label><span><input name="config[recaptcha_public_key]" id="recaptcha_public_key" class="textbox" value="{$CONFIG.recaptcha_public_key}"></span></div>
+         <div><label for="recaptcha_secret_key">{$LANG.settings.recaptcha_secret_key} {$LANG.common.optional}</label><span><input name="config[recaptcha_secret_key]" id="recaptcha_secret_key" class="textbox" value="{$CONFIG.recaptcha_secret_key}"></span></div>
+         <div class="clear">{$LANG.settings.new_recaptcha_note}
             {if !$gr_compatibility.v2}
             <br><strong>{$LANG.settings.reCAPTCHA_v2_na}</strong>
             {/if}
@@ -477,6 +477,11 @@
          <div><label for="cache">{$LANG.settings.cache_enable} (<a href="https://support.cubecart.com/hc/en-gb/articles/360003831737" target="_blank">{$CACHE_METHOD}</a>)</label><span><select name="config[cache]" id="cache" class="textbox">
      {foreach from=$OPT_CACHE item=option}<option value="{$option.value}"{$option.selected}>{$option.title}</option>{/foreach}
    </select></span></div>
+      </fieldset>
+      <fieldset>
+         <legend>{$LANG.settings.elasticsearch}</legend>
+         <div><label for="elasticsearch">{$LANG.common.enable}</label><span><input name="config[elasticsearch]" id="elasticsearch" type="hidden" class="toggle" value="{$CONFIG.elasticsearch}"></span></div>
+         <div class="clear important"><strong>IMPORTANT: After enabling Elasticsearch you must build your search index <a href="?_g=maintenance#elasticsearch">here</a>.</strong></div>
       </fieldset>
       <fieldset>
          <legend>{$LANG.settings.title_proxy}</legend>
